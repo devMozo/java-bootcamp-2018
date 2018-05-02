@@ -51,10 +51,15 @@ public class ShoppingCartTest {
 		ShoppingCart oShoppingCart = new ShoppingCart();
 		// New Product
 		Product oProduct = new Product();
-		// Initialize Product
-		oProduct.setStrName("Chevrolet");
-		// Initialize the Product's Quantity
-		oProduct.setiCant(20);
+		// Try to..
+		try {
+			// Initialize Product
+			oProduct.setStrName("Chevrolet");
+			// Initialize the Product's Quantity
+			oProduct.setiCant(20);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		// Add several times the same products to the cart
 		try {
 			oShoppingCart.add(oProduct);
@@ -83,10 +88,15 @@ public class ShoppingCartTest {
 		ShoppingCart oShoppingCart = new ShoppingCart();
 		// New Product
 		Product oProduct = new Product();
-		// Initialize the name of the product
-		oProduct.setStrName("Chevrolet");
-		// Initialize the quantity of the product
-		oProduct.setiCant(20);
+		// Try to..
+		try {
+			// Initialize the name of the product
+			oProduct.setStrName("Chevrolet");
+			// Initialize the quantity of the product
+			oProduct.setiCant(20);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		// Add several times the product to the chart
 		try {
 			oShoppingCart.add(oProduct);
@@ -96,9 +106,14 @@ public class ShoppingCartTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// Update the information of the product
-		oProduct.setStrName("Ford");
-		oProduct.setiCant(40);
+		// Try to..
+		try {
+			// Update the information of the product
+			oProduct.setStrName("Ford");
+			oProduct.setiCant(40);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		// And try to update some product that we've inserted before
 		oShoppingCart.update(2, oProduct);
 		// Check if the size is the same
