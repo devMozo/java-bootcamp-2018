@@ -31,7 +31,11 @@ CREATE TABLE IF NOT EXISTS courses (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
     hours_by_week INT,
-    schedule_time INT
+    schedule_time INT,
+    id_teacher INT UNSIGNED NOT NULL,
+    CONSTRAINT fk_id_teacher 
+        FOREIGN KEY (id_teacher)
+        REFERENCES teachers(id)
 ) ENGINE=INNODB;
 
 CREATE TABLE IF NOT EXISTS student_x_course (
@@ -42,6 +46,34 @@ CREATE TABLE IF NOT EXISTS student_x_course (
         FOREIGN KEY (id_student)
         REFERENCES students(id),
     CONSTRAINT fk_id_course 
+        FOREIGN KEY (id_course)
+        REFERENCES courses(id)
+) ENGINE=INNODB;
+
+CREATE TABLE IF NOT EXISTS partial_notes (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    note INT UNSIGNED,
+    id_student INT UNSIGNED NOT NULL,
+    id_course INT UNSIGNED NOT NULL,
+    INDEX i_note (note),
+    CONSTRAINT fk_id_student_partial_note 
+        FOREIGN KEY (id_student)
+        REFERENCES students(id),
+    CONSTRAINT fk_id_course_partial_note
+        FOREIGN KEY (id_course)
+        REFERENCES courses(id)
+) ENGINE=INNODB;
+
+CREATE TABLE IF NOT EXISTS final_notes (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    note INT UNSIGNED,
+    id_student INT UNSIGNED NOT NULL,
+    id_course INT UNSIGNED NOT NULL,
+    INDEX i_note (note),
+    CONSTRAINT fk_id_student_final_note
+        FOREIGN KEY (id_student)
+        REFERENCES students(id),
+    CONSTRAINT fk_id_course_final_note
         FOREIGN KEY (id_course)
         REFERENCES courses(id)
 ) ENGINE=INNODB;
@@ -134,11 +166,14 @@ CALL insertTeacher('Arquimedes', "Raul", 152522305);
 CALL insertTeacher('Aristoteles', "Jose", 152522305);
 CALL insertTeacher('Aquino', "Santo Tomas", 152522305);
 
-INSERT INTO courses (name, hours_by_week, schedule_time)
-VALUES ("Mamposteria en Seco", 23, 4),
-       ("Carpinteria Azteca", 10, 2),
-       ("Breaking Bad (Nombre Clave)", 24, 24);
+# ADDED COURSES
 
+INSERT INTO courses (name, hours_by_week, schedule_time, id_teacher)
+VALUES ("Mamposteria en Seco", 23, 4, (SELECT id FROM teachers LIMIT 1)),
+       ("Carpinteria Azteca", 10, 2, (SELECT id FROM teachers LIMIT 1,1)),
+       ("Breaking Bad (Nombre Clave)", 24, 24, (SELECT id FROM teachers LIMIT 2,1));
+
+# ADDED STUDENT BY COURSE
 
 INSERT INTO student_x_course (id_student, id_course)
 SELECT id, (
@@ -164,3 +199,62 @@ SELECT  id, (
 FROM students
 LIMIT 20,10;
 
+# ADDED SOME PARTIAL NOTES
+
+INSERT INTO partial_notes (note, id_student, id_course)
+SELECT 1, students.id, (
+                        SELECT id
+                        FROM courses
+                        LIMIT 1) AS id_course
+FROM students
+LIMIT 5;
+
+INSERT INTO partial_notes (note, id_student, id_course)
+SELECT 1, students.id, (
+                        SELECT id
+                        FROM courses
+                        LIMIT 1) AS id_course
+FROM students
+LIMIT 5;
+
+INSERT INTO partial_notes (note, id_student, id_course)
+SELECT 6, students.id, (
+                        SELECT id
+                        FROM courses
+                        LIMIT 1) AS id_course
+FROM students
+LIMIT 5,5;
+
+INSERT INTO partial_notes (note, id_student, id_course)
+SELECT 6, students.id, (
+                        SELECT id
+                        FROM courses
+                        LIMIT 1) AS id_course
+FROM students
+LIMIT 5,5;
+
+INSERT INTO partial_notes (note, id_student, id_course)
+SELECT 8, students.id, (
+                        SELECT id
+                        FROM courses
+                        LIMIT 1) AS id_course
+FROM students
+LIMIT 10;
+
+# ADDED SOME FINAL NOTES
+
+INSERT INTO final_notes (note, id_student, id_course)
+SELECT 2, students.id, (
+                        SELECT id
+                        FROM courses
+                        LIMIT 1) AS id_course
+FROM students
+LIMIT 5;
+
+INSERT INTO final_notes (note, id_student, id_course)
+SELECT 7, students.id, (
+                        SELECT id
+                        FROM courses
+                        LIMIT 1) AS id_course
+FROM students
+LIMIT 5, 5;
