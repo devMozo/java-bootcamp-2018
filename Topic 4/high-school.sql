@@ -27,15 +27,31 @@ CREATE TABLE IF NOT EXISTS teachers (
         REFERENCES people(id)
 ) ENGINE=INNODB;
 
+CREATE TABLE IF NOT EXISTS days (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    value VARCHAR(100) NOT NULL
+) ENGINE=INNODB;
+
 CREATE TABLE IF NOT EXISTS courses (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
-    hours_by_week INT,
-    schedule_time INT,
     id_teacher INT UNSIGNED NOT NULL,
     CONSTRAINT fk_id_teacher 
         FOREIGN KEY (id_teacher)
         REFERENCES teachers(id)
+) ENGINE=INNODB;
+
+CREATE TABLE IF NOT EXISTS day_x_course(
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    hours INT UNSIGNED NOT NULL,
+    id_day INT UNSIGNED NOT NULL,
+    id_course INT UNSIGNED NOT NULL,
+    CONSTRAINT fk_id_day_course
+        FOREIGN KEY (id_day)
+        REFERENCES days(id),
+    CONSTRAINT fk_id_course_of_that_day
+        FOREIGN KEY (id_course)
+        REFERENCES courses(id)
 ) ENGINE=INNODB;
 
 CREATE TABLE IF NOT EXISTS student_x_course (
@@ -166,12 +182,34 @@ CALL insertTeacher('Arquimedes', "Raul", 152522305);
 CALL insertTeacher('Aristoteles', "Jose", 152522305);
 CALL insertTeacher('Aquino', "Santo Tomas", 152522305);
 
+# ADDED SOME DAYS
+
+INSERT INTO days (value)
+VALUES ("Monday"),
+       ("Tuesday"),
+       ("Wednesday"),
+       ("Thursday"),
+       ("Friday"),
+       ("Saturday"),
+       ("Sunday");
+
 # ADDED COURSES
 
-INSERT INTO courses (name, hours_by_week, schedule_time, id_teacher)
-VALUES ("Mamposteria en Seco", 23, 4, (SELECT id FROM teachers LIMIT 1)),
-       ("Carpinteria Azteca", 10, 2, (SELECT id FROM teachers LIMIT 1,1)),
-       ("Breaking Bad (Nombre Clave)", 24, 24, (SELECT id FROM teachers LIMIT 2,1));
+INSERT INTO courses (name, id_teacher)
+VALUES ("Mamposteria en Seco", (SELECT id FROM teachers LIMIT 1)),
+       ("Carpinteria Azteca", (SELECT id FROM teachers LIMIT 1,1)),
+       ("Breaking Bad (Nombre Clave)", (SELECT id FROM teachers LIMIT 2,1));
+
+
+# ADDED THE DAY OF THE COURSES
+
+INSERT INTO day_x_course (id_course, id_day, hours)
+VALUES ((SELECT id FROM courses LIMIT 1), (SELECT id FROM days LIMIT 3,1), 3),
+       ((SELECT id FROM courses LIMIT 1), (SELECT id FROM days LIMIT 5,1), 3),
+       ((SELECT id FROM courses LIMIT 1,1), (SELECT id FROM days LIMIT 5,1), 3),
+       ((SELECT id FROM courses LIMIT 1,1), (SELECT id FROM days LIMIT 1), 2),
+       ((SELECT id FROM courses LIMIT 1,1), (SELECT id FROM days LIMIT 5,1), 2),
+       ((SELECT id FROM courses LIMIT 2,1), (SELECT id FROM days LIMIT 1,1), 3);
 
 # ADDED STUDENT BY COURSE
 
