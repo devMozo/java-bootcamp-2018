@@ -97,7 +97,7 @@ db.createCollection('notes', {
     validator: {
         $jsonSchema : {
             bsonType: 'object',
-            required: ['type_note', 'note', 'id_student'],
+            required: ['type_note', 'note', 'id_student', 'id_course'],
             description: 'This must represent the note of the students',
             properties: {
                 'type_note' : {
@@ -111,6 +111,10 @@ db.createCollection('notes', {
                 'id_student' : {
                     bsonType: 'objectId',
                     'description': 'Student\'s ID'
+                },
+                'id_course' : {
+                    bsonType: 'objectId',
+                    description: 'Course\'s ID'
                 }
             }
         }
@@ -149,12 +153,13 @@ function insertCourses(name, idTeacher, scheduleTime){
 
 }
 
-function insertNotes(typeNote, note, idStudent){
+function insertNotes(typeNote, note, idStudent, idCourse){
 
     db.notes.insertOne({
         type_note: typeNote,
         note: note,
-        id_student: idStudent
+        id_student: idStudent,
+        id_course: idCourse
     });
 }
 
@@ -243,44 +248,44 @@ insertCourses("Breaking Bad (Nombre Clave)",
               });
 
 
-insertNotes('partial', 4, db.students.findOne({ first_name: "Nicolas"})._id);
-insertNotes('partial', 5, db.students.findOne({ first_name: "Jorge"})._id);
-insertNotes('partial', 2, db.students.findOne({ first_name: "Pipa"})._id);
-insertNotes('partial', 5, db.students.findOne({ first_name: "Era"})._id);
-insertNotes('partial', 3, db.students.findOne({ first_name: "Gustavo"})._id);
-insertNotes('partial', 1, db.students.findOne({ first_name: "Quinquela"})._id);
-insertNotes('partial', 3, db.students.findOne({ first_name: "Madonna"})._id);
-insertNotes('partial', 2, db.students.findOne({ first_name: "Porque"})._id);
-insertNotes('partial', 4, db.students.findOne({ first_name: "Player"})._id);
-insertNotes('partial', 5, db.students.findOne({ first_name: "Player"})._id);
-insertNotes('partial', 5, db.students.findOne({ first_name: "Nicolas"})._id);
-insertNotes('partial', 7, db.students.findOne({ first_name: "Jorge"})._id);
-insertNotes('partial', 3, db.students.findOne({ first_name: "Pipa"})._id);
-insertNotes('partial', 2, db.students.findOne({ first_name: "Era"})._id);
-insertNotes('partial', 2, db.students.findOne({ first_name: "Gustavo"})._id);
-insertNotes('partial', 2, db.students.findOne({ first_name: "Quinquela"})._id);
-insertNotes('partial', 9, db.students.findOne({ first_name: "Madonna"})._id);
-insertNotes('partial', 5, db.students.findOne({ first_name: "Porque"})._id);
-insertNotes('partial', 4, db.students.findOne({ first_name: "Player"})._id);
-insertNotes('partial', 5, db.students.findOne({ first_name: "Player"})._id);
-insertNotes('partial', 5, db.students.findOne({ first_name: "Nicolas"})._id);
-insertNotes('partial', 8, db.students.findOne({ first_name: "Jorge"})._id);
-insertNotes('partial', 8, db.students.findOne({ first_name: "Pipa"})._id);
-insertNotes('partial', 1, db.students.findOne({ first_name: "Era"})._id);
-insertNotes('partial', 8, db.students.findOne({ first_name: "Gustavo"})._id);
-insertNotes('partial', 5, db.students.findOne({ first_name: "Quinquela"})._id);
-insertNotes('partial', 6, db.students.findOne({ first_name: "Madonna"})._id);
-insertNotes('partial', 5, db.students.findOne({ first_name: "Porque"})._id);
-insertNotes('partial', 8, db.students.findOne({ first_name: "Player"})._id);
-insertNotes('partial', 5, db.students.findOne({ first_name: "Player"})._id);
+insertNotes('partial', 4, db.students.findOne({ first_name: "Nicolas"})._id, db.courses.findOne({ name: 'Mamposteria en Seco' })._id);
+insertNotes('partial', 5, db.students.findOne({ first_name: "Jorge"})._id, db.courses.findOne({ name: 'Mamposteria en Seco' })._id);
+insertNotes('partial', 2, db.students.findOne({ first_name: "Pipa"})._id, db.courses.findOne({ name: 'Mamposteria en Seco' })._id);
+insertNotes('partial', 5, db.students.findOne({ first_name: "Era"})._id, db.courses.findOne({ name: 'Mamposteria en Seco' })._id);
+insertNotes('partial', 3, db.students.findOne({ first_name: "Gustavo"})._id, db.courses.findOne({ name: 'Carpinteria Azteca' })._id);
+insertNotes('partial', 1, db.students.findOne({ first_name: "Quinquela"})._id, db.courses.findOne({ name: 'Carpinteria Azteca' })._id);
+insertNotes('partial', 3, db.students.findOne({ first_name: "Madonna"})._id, db.courses.findOne({ name: 'Carpinteria Azteca' })._id);
+insertNotes('partial', 2, db.students.findOne({ first_name: "Porque"})._id, db.courses.findOne({ name: 'Breaking Bad (Nombre Clave)' })._id);
+insertNotes('partial', 4, db.students.findOne({ first_name: "Player"})._id, db.courses.findOne({ name: 'Breaking Bad (Nombre Clave)' })._id);
+insertNotes('partial', 5, db.students.findOne({ first_name: "Player"})._id, db.courses.findOne({ name: 'Breaking Bad (Nombre Clave)' })._id);
+insertNotes('partial', 5, db.students.findOne({ first_name: "Nicolas"})._id, db.courses.findOne({ name: 'Mamposteria en Seco' })._id);
+insertNotes('partial', 7, db.students.findOne({ first_name: "Jorge"})._id, db.courses.findOne({ name: 'Mamposteria en Seco' })._id);
+insertNotes('partial', 3, db.students.findOne({ first_name: "Pipa"})._id, db.courses.findOne({ name: 'Mamposteria en Seco' })._id);
+insertNotes('partial', 2, db.students.findOne({ first_name: "Era"})._id, db.courses.findOne({ name: 'Mamposteria en Seco' })._id);
+insertNotes('partial', 2, db.students.findOne({ first_name: "Gustavo"})._id, db.courses.findOne({ name: 'Carpinteria Azteca' })._id);
+insertNotes('partial', 2, db.students.findOne({ first_name: "Quinquela"})._id, db.courses.findOne({ name: 'Carpinteria Azteca' })._id);
+insertNotes('partial', 9, db.students.findOne({ first_name: "Madonna"})._id, db.courses.findOne({ name: 'Carpinteria Azteca' })._id);
+insertNotes('partial', 5, db.students.findOne({ first_name: "Porque"})._id, db.courses.findOne({ name: 'Breaking Bad (Nombre Clave)' })._id);
+insertNotes('partial', 4, db.students.findOne({ first_name: "Player"})._id, db.courses.findOne({ name: 'Breaking Bad (Nombre Clave)' })._id);
+insertNotes('partial', 5, db.students.findOne({ first_name: "Player"})._id, db.courses.findOne({ name: 'Breaking Bad (Nombre Clave)' })._id);
+insertNotes('partial', 5, db.students.findOne({ first_name: "Nicolas"})._id, db.courses.findOne({ name: 'Mamposteria en Seco' })._id);
+insertNotes('partial', 8, db.students.findOne({ first_name: "Jorge"})._id, db.courses.findOne({ name: 'Mamposteria en Seco' })._id);
+insertNotes('partial', 8, db.students.findOne({ first_name: "Pipa"})._id, db.courses.findOne({ name: 'Mamposteria en Seco' })._id);
+insertNotes('partial', 1, db.students.findOne({ first_name: "Era"})._id, db.courses.findOne({ name: 'Mamposteria en Seco' })._id);
+insertNotes('partial', 8, db.students.findOne({ first_name: "Gustavo"})._id, db.courses.findOne({ name: 'Carpinteria Azteca' })._id);
+insertNotes('partial', 5, db.students.findOne({ first_name: "Quinquela"})._id, db.courses.findOne({ name: 'Carpinteria Azteca' })._id);
+insertNotes('partial', 6, db.students.findOne({ first_name: "Madonna"})._id, db.courses.findOne({ name: 'Carpinteria Azteca' })._id);
+insertNotes('partial', 5, db.students.findOne({ first_name: "Porque"})._id, db.courses.findOne({ name: 'Breaking Bad (Nombre Clave)' })._id);
+insertNotes('partial', 8, db.students.findOne({ first_name: "Player"})._id, db.courses.findOne({ name: 'Breaking Bad (Nombre Clave)' })._id);
+insertNotes('partial', 5, db.students.findOne({ first_name: "Player"})._id, db.courses.findOne({ name: 'Breaking Bad (Nombre Clave)' })._id);
 
-insertNotes('final', 4, db.students.findOne({ first_name: "Nicolas"})._id);
-insertNotes('final', 5, db.students.findOne({ first_name: "Jorge"})._id);
-insertNotes('final', 2, db.students.findOne({ first_name: "Pipa"})._id);
-insertNotes('final', 5, db.students.findOne({ first_name: "Era"})._id);
-insertNotes('final', 3, db.students.findOne({ first_name: "Gustavo"})._id);
-insertNotes('final', 1, db.students.findOne({ first_name: "Quinquela"})._id);
-insertNotes('final', 3, db.students.findOne({ first_name: "Madonna"})._id);
-insertNotes('final', 2, db.students.findOne({ first_name: "Porque"})._id);
-insertNotes('final', 4, db.students.findOne({ first_name: "Player"})._id);
-insertNotes('final', 5, db.students.findOne({ first_name: "Player"})._id);
+insertNotes('final', 4, db.students.findOne({ first_name: "Nicolas"})._id, db.courses.findOne({ name: 'Mamposteria en Seco' })._id);
+insertNotes('final', 5, db.students.findOne({ first_name: "Jorge"})._id, db.courses.findOne({ name: 'Mamposteria en Seco' })._id);
+insertNotes('final', 2, db.students.findOne({ first_name: "Pipa"})._id, db.courses.findOne({ name: 'Mamposteria en Seco' })._id);
+insertNotes('final', 5, db.students.findOne({ first_name: "Era"})._id, db.courses.findOne({ name: 'Mamposteria en Seco' })._id);
+insertNotes('final', 3, db.students.findOne({ first_name: "Gustavo"})._id, db.courses.findOne({ name: 'Carpinteria Azteca' })._id);
+insertNotes('final', 1, db.students.findOne({ first_name: "Quinquela"})._id, db.courses.findOne({ name: 'Carpinteria Azteca' })._id);
+insertNotes('final', 3, db.students.findOne({ first_name: "Madonna"})._id, db.courses.findOne({ name: 'Carpinteria Azteca' })._id);
+insertNotes('final', 2, db.students.findOne({ first_name: "Porque"})._id, db.courses.findOne({ name: 'Breaking Bad (Nombre Clave)' })._id);
+insertNotes('final', 4, db.students.findOne({ first_name: "Player"})._id, db.courses.findOne({ name: 'Breaking Bad (Nombre Clave)' })._id);
+insertNotes('final', 5, db.students.findOne({ first_name: "Player"})._id, db.courses.findOne({ name: 'Breaking Bad (Nombre Clave)' })._id);
