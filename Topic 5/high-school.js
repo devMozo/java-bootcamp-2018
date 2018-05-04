@@ -247,6 +247,36 @@ insertCourses("Breaking Bad (Nombre Clave)",
                 ]
               });
 
+insertCourses("Breaking Bad (Nombre Clave) 2", 
+              db.teachers.findOne({ first_name: 'Arquimedes' })._id, 
+              {
+                days : [
+                    {
+                        day: 'Monday',
+                        hour: new Date("2016-01-01T12:00:00Z")
+                    },
+                    {
+                        day: 'Thursday',
+                        hour: new Date("2016-01-01T12:00:00Z")
+                    }
+                ]
+              });
+
+insertCourses("aaBreaking Bad (Nombre Clave) 2", 
+              db.teachers.findOne({ first_name: 'Arquimedes' })._id, 
+              {
+                days : [
+                    {
+                        day: 'Monday',
+                        hour: new Date("2016-01-01T12:00:00Z")
+                    },
+                    {
+                        day: 'Thursday',
+                        hour: new Date("2016-01-01T12:00:00Z")
+                    }
+                ]
+              });
+
 
 insertNotes('partial', 4, db.students.findOne({ first_name: "Nicolas"})._id, db.courses.findOne({ name: 'Mamposteria en Seco' })._id);
 insertNotes('partial', 5, db.students.findOne({ first_name: "Jorge"})._id, db.courses.findOne({ name: 'Mamposteria en Seco' })._id);
