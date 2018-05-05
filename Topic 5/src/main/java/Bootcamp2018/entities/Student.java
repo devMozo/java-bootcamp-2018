@@ -1,8 +1,12 @@
 package Bootcamp2018.entities;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Property;
 
 import java.util.Date;
 /**
@@ -12,10 +16,16 @@ import java.util.Date;
  * @since 1.0
  */
 @Entity("students")
+@Getter
+@Setter
+@EqualsAndHashCode
 public class Student {
 	@Id
 	private ObjectId id;
-	private String first_name;
-	private String last_name;
-	private Date date_of_birth;
+	@Property("first_name")
+	private String strFirstName;
+	@Property("last_name")
+	private String strLastName;
+	@Property("date_of_birth")
+	private Date dteBirth;
 }

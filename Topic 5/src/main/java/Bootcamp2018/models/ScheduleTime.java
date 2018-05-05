@@ -1,5 +1,7 @@
 package Bootcamp2018.models;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.mongodb.morphia.annotations.Embedded;
 
 import java.util.ArrayList;
@@ -10,6 +12,8 @@ import java.util.ArrayList;
  * @since 1.0
  */
 @Embedded
+@Getter
+@Setter
 public class ScheduleTime {
 	private ArrayList<Day> arrayListDays;
 }

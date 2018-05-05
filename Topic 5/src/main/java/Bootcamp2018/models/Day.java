@@ -1,5 +1,9 @@
 package Bootcamp2018.models;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.Date;
 /**
  * Represents a day
@@ -7,8 +11,11 @@ import java.util.Date;
  * @version 1.0
  * @since 1.0
  */
+@Getter
+@Setter
+@NoArgsConstructor
 public class Day {
-	private enum day {
+	public enum Daytime {
 		MONDAY,
 		TUESDAY,
 		WEDNESDAY,
@@ -17,5 +24,6 @@ public class Day {
 		SATURDAY,
 		SUNDAY
 	};
+	private Daytime day;
 	private Date hour;
 }

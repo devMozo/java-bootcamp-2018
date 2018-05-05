@@ -1,11 +1,10 @@
 package Bootcamp2018.entities;
 
 import Bootcamp2018.models.ScheduleTime;
+import lombok.Getter;
+import lombok.Setter;
 import org.bson.types.ObjectId;
-import org.mongodb.morphia.annotations.Embedded;
-import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Id;
-import org.mongodb.morphia.annotations.Reference;
+import org.mongodb.morphia.annotations.*;
 
 /**
  * Represents a Course
@@ -14,11 +13,13 @@ import org.mongodb.morphia.annotations.Reference;
  * @since 1.0
  */
 @Entity("courses")
+@Getter
+@Setter
 public class Course {
 	@Id
 	private ObjectId id;
 	@Reference
 	private Teacher teacher;
-	@Embedded
-	private ScheduleTime schedule_time;
+	@Embedded("schedule_time")
+	private ScheduleTime oScheduleTime;
 }
