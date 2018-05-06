@@ -60,7 +60,6 @@ public class ControllerUser {
 		if(optOldUser.isPresent()){
 			// Set the id to the user to update
 			oUser.setId(id);
-			System.out.println(oUser.getId() + " " + oUser.getEmail() + " " + oUser.getFirst_name() + " " + oUser.getLast_name() + " " + oUser.getNickname() + " " + oUser.getPassword());
 			// Get the updated user
 			User oSavedUser = this.oServiceUser.update(oUser);
 			// Create the new location to redirect to it

@@ -101,7 +101,7 @@ public class ServiceUser {
 	 */
 	@Transactional
 	public List<User> getAll() {
-		// Get the first coincidence
+		// Get all coincidences
 		return this.iDAOUser.findAll();
 	}
 }

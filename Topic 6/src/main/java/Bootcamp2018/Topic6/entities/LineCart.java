@@ -20,7 +20,7 @@ import java.util.ArrayList;
 @Setter
 @NoArgsConstructor
 @Entity(name = "shopping_carts")
-public class ShoppingCart {
+public class LineCart {
 	@Id
 	private Long id;
 	@ManyToOne(fetch = FetchType.LAZY)

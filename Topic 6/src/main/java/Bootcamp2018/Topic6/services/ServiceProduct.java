@@ -99,7 +99,7 @@ public class ServiceProduct {
 	 */
 	@Transactional
 	public List<Product> getAll() {
-		// Get the first coincidence
+		// Get all coincidences
 		return this.iDAOProduct.findAll();
 	}
 }

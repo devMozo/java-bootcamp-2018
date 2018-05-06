@@ -36,5 +36,5 @@ public class User {
 	@Column(name = "email", unique = true)
 	private String email;
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-	private List<ShoppingCart> arrShoppingCart = new ArrayList<>();
+	private List<LineCart> arrLineCart = new ArrayList<>();
 }

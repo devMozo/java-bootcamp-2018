@@ -1,6 +1,6 @@
 package Bootcamp2018.Topic6.daos;
 
-import Bootcamp2018.Topic6.entities.ShoppingCart;
+import Bootcamp2018.Topic6.entities.LineCart;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
  * @since 1.0
  */
 @Repository
-public interface iDAOShoppingCart extends JpaRepository<ShoppingCart, Long>{
+public interface iDAOLineCart extends JpaRepository<LineCart, Long>{
 }
