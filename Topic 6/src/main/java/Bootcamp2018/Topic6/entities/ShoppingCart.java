@@ -1,5 +1,6 @@
 package Bootcamp2018.Topic6.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,9 +24,11 @@ public class ShoppingCart {
 	@Id
 	private Long id;
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
 	@JoinColumn(name = "id_user")
 	private User user;
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
 	@JoinColumn(name = "id_product")
 	private Product product;
 	@NotBlank

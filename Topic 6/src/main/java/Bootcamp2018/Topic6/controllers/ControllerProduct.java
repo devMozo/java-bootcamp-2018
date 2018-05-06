@@ -21,41 +21,82 @@ import java.util.List;
 @RestController
 @RequestMapping("/product")
 public class ControllerProduct {
-
+	// Product's Services
 	@Autowired
 	private ServiceProduct serviceProduct;
-
-	@RequestMapping(path = "/action/add", produces = "application/json", method = RequestMethod.POST)
+	/**
+	 * Add a new product
+	 * @param oProduct
+	 * @return
+	 */
+	@RequestMapping(path = "/action/add", method = RequestMethod.POST)
 	public ResponseEntity<?> add(@RequestBody Product oProduct){
-
+		// Get the saved product
 		Product oSavedProduct = this.serviceProduct.add(oProduct);
-
+		// Create the new location to redirect to it
 		URI newLocation = ServletUriComponentsBuilder
 									.fromCurrentServletMapping()
 									.path("/action/get/{id}")
 									.buildAndExpand(oSavedProduct.getId())
 									.toUri();
-
+		// Build the response and return it
 		return ResponseEntity.created(newLocation).build();
 	}
-
-	@RequestMapping(path = "/action/update/{id}", produces = "application/json", method = RequestMethod.PUT)
+	/**
+	 * Update a product by id
+	 * @param id
+	 * @param oProduct
+	 * @return
+	 */
+	@RequestMapping(path = "/action/update/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Product oProduct){
-
-		return null;
+		// Get the saved product from the DB
+		Product oOldProduct = this.serviceProduct.get(id);
+		// New response by default
+		ResponseEntity oResponse = ResponseEntity.notFound().build();
+		// If the product exist
+		if(oOldProduct != null){
+			// Get the updated product
+			Product oSavedProduct = this.serviceProduct.update(oProduct);
+			// Create the new location to redirect to it
+			URI newLocation = ServletUriComponentsBuilder
+					.fromCurrentServletMapping()
+					.path("/action/get/{id}")
+					.buildAndExpand(oSavedProduct.getId())
+					.toUri();
+			// Build the response
+			oResponse = ResponseEntity.created(newLocation).build();
+		}
+		// Return the response's object
+		return oResponse;
 	}
-
+	/**
+	 * Delete a product by id
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(path = "/action/delete/{id}", produces = "application/json", method = RequestMethod.DELETE)
 	public ResponseEntity<?> delete(@PathVariable("id") Long id){
-
-		return null;
+		// Get the product to delete
+		Product oProductToDelete = this.serviceProduct.get(id);
+		// Delete it
+		this.serviceProduct.remove(oProductToDelete);
+		// Return an ok's message
+		return ResponseEntity.ok().build();
 	}
-
+	/**
+	 * Get an specific product
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(path = "/action/get/{id}", produces = "application/json", method = RequestMethod.GET)
 	public Product get(@PathVariable("id") Long id){
 		return this.serviceProduct.get(id);
 	}
-
+	/**
+	 * Get all products
+	 * @return
+	 */
 	@RequestMapping(path = "/action/getAll", produces = "application/json", method = RequestMethod.GET)
 	public List<Product> getAll(){
 		return this.serviceProduct.getAll();
