@@ -25,8 +25,10 @@ public class Product {
 	private Long id;
 	// The Product's Name
 	@NotBlank
+	@Column(name = "name")
 	private String strName = new String();
 	// The quantity of the products
+	@Column(name = "cant")
 	private int iCant = 0;
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,mappedBy = "product")
 	private List<ShoppingCart> arrShoppingCart = new ArrayList<>();

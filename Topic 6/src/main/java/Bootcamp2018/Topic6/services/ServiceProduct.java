@@ -5,10 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import Bootcamp2018.Topic6.daos.iDAOProduct;
 
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Represents the service to handle products
@@ -73,7 +72,7 @@ public class ServiceProduct {
 	@Transactional
 	public void remove(Product oProduct) {
 		// If the index position is bigger than the size of the array
-		if(oProduct == null || this.iDAOProduct.existsById(oProduct.getId())){
+		if(oProduct == null || !this.iDAOProduct.existsById(oProduct.getId())){
 			try {
 				throw new IndexOutOfBoundsException("You've wanted to delete a product that doesn't exist");
 			} catch (Exception e) {
@@ -90,9 +89,9 @@ public class ServiceProduct {
 	 * @return ArrayList
 	 */
 	@Transactional
-	public Product get(Long id) {
+	public Optional<Product> get(Long id) {
 		// Get the first coincidence
-		return this.iDAOProduct.getOne(id);
+		return this.iDAOProduct.findById(id);
 	}
 	/**
 	 * Get all products

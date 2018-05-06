@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Represents the controller to handle the Product's CRUD
@@ -49,13 +50,15 @@ public class ControllerProduct {
 	 * @return
 	 */
 	@RequestMapping(path = "/action/update/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Product oProduct){
+	public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody Product oProduct){
 		// Get the saved product from the DB
-		Product oOldProduct = this.serviceProduct.get(id);
+		Optional optOldProduct = this.serviceProduct.get(id);
 		// New response by default
 		ResponseEntity oResponse = ResponseEntity.notFound().build();
 		// If the product exist
-		if(oOldProduct != null){
+		if(optOldProduct.isPresent()){
+			// Set the id to the product to update
+			oProduct.setId(id);
 			// Get the updated product
 			Product oSavedProduct = this.serviceProduct.update(oProduct);
 			// Create the new location to redirect to it
@@ -78,11 +81,18 @@ public class ControllerProduct {
 	@RequestMapping(path = "/action/delete/{id}", produces = "application/json", method = RequestMethod.DELETE)
 	public ResponseEntity<?> delete(@PathVariable("id") Long id){
 		// Get the product to delete
-		Product oProductToDelete = this.serviceProduct.get(id);
-		// Delete it
-		this.serviceProduct.remove(oProductToDelete);
+		Optional<Product> optProductToDelete = this.serviceProduct.get(id);
+		// Response by default
+		ResponseEntity oResponse = ResponseEntity.notFound().build();
+		// If the product exists
+		if(optProductToDelete.isPresent()){
+			// Delete it
+			this.serviceProduct.remove(optProductToDelete.get());
+			// Become the response to OK
+			oResponse = ResponseEntity.ok().build();
+		}
 		// Return an ok's message
-		return ResponseEntity.ok().build();
+		return oResponse;
 	}
 	/**
 	 * Get an specific product
@@ -91,7 +101,17 @@ public class ControllerProduct {
 	 */
 	@RequestMapping(path = "/action/get/{id}", produces = "application/json", method = RequestMethod.GET)
 	public Product get(@PathVariable("id") Long id){
-		return this.serviceProduct.get(id);
+		// Get the product to delete
+		Optional<Product> optProduct = this.serviceProduct.get(id);
+		// Response by default
+		Product oResponse = null;
+		// If the product exists
+		if(optProduct.isPresent()){
+			// Become the response to the correct product
+			oResponse = optProduct.get();
+		}
+		// Return an ok's message
+		return oResponse;
 	}
 	/**
 	 * Get all products
