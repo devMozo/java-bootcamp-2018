@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,9 +28,9 @@ public class Product {
 	@NotBlank
 	@Column(name = "name")
 	private String strName = new String();
-	@NotBlank
+	@NotNull
 	@Column(name = "price")
-	private int price;
+	private Integer price;
 	// The quantity of the products
 	@Column(name = "cant")
 	private int iCant = 0;
