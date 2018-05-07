@@ -129,8 +129,8 @@ public class ControllerUser {
 	 * @return
 	 */
 	@RequestMapping(path = "/action/getByNickname/{nickname}", method = RequestMethod.GET, produces = "application/json")
-	public List<User> getByNickname(@PathVariable("nickname") String strNickname){
-		// Return all user that has that nickname
+	public User getByNickname(@PathVariable("nickname") String strNickname){
+		// Return the user that has that nickname
 		return this.oServiceUser.getByNickname(strNickname);
 	}
 	/**

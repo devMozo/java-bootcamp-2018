@@ -5,6 +5,7 @@ import Bootcamp2018.API.entities.Product;
 
 import javax.transaction.Transactional;
 import Bootcamp2018.API.daos.iDAOLineCart;
+import Bootcamp2018.API.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

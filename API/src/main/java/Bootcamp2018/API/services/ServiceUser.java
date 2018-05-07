@@ -113,7 +113,7 @@ public class ServiceUser {
 	 * @return the user
 	 */
 	@Transactional
-	public List<User> getByNickname(String strNickname) {
+	public User getByNickname(String strNickname) {
 		// Get all coincidences
 		return this.iDAOUser.findByNickname(strNickname);
 	}

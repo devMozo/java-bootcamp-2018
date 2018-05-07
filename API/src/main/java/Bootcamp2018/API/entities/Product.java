@@ -27,6 +27,9 @@ public class Product {
 	@NotBlank
 	@Column(name = "name")
 	private String strName = new String();
+	@NotBlank
+	@Column(name = "price")
+	private int price;
 	// The quantity of the products
 	@Column(name = "cant")
 	private int iCant = 0;
