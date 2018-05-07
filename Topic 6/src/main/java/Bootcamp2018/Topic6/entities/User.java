@@ -24,9 +24,11 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@NotBlank
-	private String first_name;
+	@Column(name = "first_name", unique = true)
+	private String firstName;
 	@NotBlank
-	private String last_name;
+	@Column(name = "last_name", unique = true)
+	private String lastName;
 	@NotBlank
 	@Column(name = "nickname", unique = true)
 	private String nickname;

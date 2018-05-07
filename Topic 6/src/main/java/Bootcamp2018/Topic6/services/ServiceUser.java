@@ -95,6 +95,28 @@ public class ServiceUser {
 		// Get the first coincidence
 		return this.iDAOUser.findById(id);
 	}
+
+	/**
+	 * Get an specific user by the first name
+	 * @param strFirstName
+	 * @return the User
+	 */
+	@Transactional
+	public List<User> getByFirstName(String strFirstName) {
+		// Get all coincidences
+		return this.iDAOUser.findByFirstName(strFirstName);
+	}
+
+	/**
+	 * Get an specific user by the nickname
+	 * @param strNickname
+	 * @return the user
+	 */
+	@Transactional
+	public List<User> getByNickname(String strNickname) {
+		// Get all coincidences
+		return this.iDAOUser.findByNickname(strNickname);
+	}
 	/**
 	 * Get all users
 	 * @return List<User>

@@ -101,7 +101,7 @@ public class ControllerUser {
 	 */
 	@RequestMapping(path = "/action/get/{id}", method = RequestMethod.GET, produces = "application/json")
 	public User get(@PathVariable("id") Long id){
-		// Get the user to delete
+		// Get the user to search
 		Optional<User> optProduct = this.oServiceUser.get(id);
 		// Response by default
 		User oResponse = null;
@@ -112,6 +112,26 @@ public class ControllerUser {
 		}
 		// Return an ok's message
 		return oResponse;
+	}
+	/**
+	 *  Get a users by the first name
+	 * @param strFirstName
+	 * @return
+	 */
+	@RequestMapping(path = "/action/getByFirstName/{firstName}", method = RequestMethod.GET, produces = "application/json")
+	public List<User> getByFirstName(@PathVariable("firstName") String strFirstName){
+		// Return all user that has that name
+		return  this.oServiceUser.getByFirstName(strFirstName);
+	}
+	/**
+	 *  Get a users by the nickname
+	 * @param strNickname
+	 * @return
+	 */
+	@RequestMapping(path = "/action/getByNickname/{nickname}", method = RequestMethod.GET, produces = "application/json")
+	public List<User> getByNickname(@PathVariable("nickname") String strNickname){
+		// Return all user that has that nickname
+		return this.oServiceUser.getByNickname(strNickname);
 	}
 	/**
 	 * Get all users
