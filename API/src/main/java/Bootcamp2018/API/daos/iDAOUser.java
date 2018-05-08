@@ -16,5 +16,5 @@ import java.util.Optional;
 @Repository
 public interface iDAOUser extends JpaRepository<User, Long>{
 	List<User> findByFirstName(String first_name);
-	List<User> findByNickname(String nickname);
+	User findByNickname(String nickname);
 }
