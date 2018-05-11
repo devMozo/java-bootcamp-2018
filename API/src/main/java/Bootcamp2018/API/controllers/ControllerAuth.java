@@ -35,7 +35,7 @@ public class ControllerAuth {
 	 * @return
 	 */
 	@RequestMapping(path = "/login", method = RequestMethod.POST, produces = "application/json")
-	public ResponseEntity<?> login(@RequestBody User oUser, HttpServletResponse httpResponse){
+	public ResponseEntity<?> login(@RequestBody User oUser, HttpServletResponse httpResponse) throws Exception {
 		// Return the first coincidence inside redis
 		User userToLogin = this.serviceUser.getByNickname(oUser.getNickname());
 		// Generate the response

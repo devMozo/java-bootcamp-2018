@@ -31,15 +31,8 @@ public class ServiceLineCart {
 	public LineCart add(LineCart oLineCart) {
 		// Default response
 		LineCart oInnerLineCart = null;
-		// If the line-cart null or has empty fields
-		if(oLineCart == null){
-			try {
-				throw new Exception("You need to pass a not-null line-cart");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			// If not..
-		} else {
+		// If the line-cart isn't null or has empty fields
+		if(oLineCart != null){
 			oInnerLineCart = this.iDAOLineCart.save(oLineCart);
 		}
 		// Return the saved line-cart
@@ -55,11 +48,7 @@ public class ServiceLineCart {
 		LineCart oInnerLineCart = null;
 		// If the index position is bigger than the size of the array
 		if(oLineCart == null || !this.iDAOLineCart.existsById(oLineCart.getId())){
-			try {
-				throw new IndexOutOfBoundsException("You've wanted to delete a line-cart that doesn't exist");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			throw new IndexOutOfBoundsException("You've wanted to delete a line-cart that doesn't exist");
 			// If not..
 		} else {
 			// Update the line-cart
@@ -76,11 +65,7 @@ public class ServiceLineCart {
 	public void remove(LineCart oLineCart) {
 		// If the index position is bigger than the size of the array
 		if(oLineCart == null || !this.iDAOLineCart.existsById(oLineCart.getId())){
-			try {
-				throw new IndexOutOfBoundsException("You've wanted to delete a line-cart that doesn't exist");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			throw new IndexOutOfBoundsException("You've wanted to delete a line-cart that doesn't exist");
 			// If not..
 		} else {
 			// Remove line-cart

@@ -49,7 +49,7 @@ public class ControllerShoppingCart {
 	public ResponseEntity<?> add(@RequestParam("cant") int iCant,
 								 @RequestParam("idProduct") Long idProduct,
 	 							 @CookieValue(value = "strEncodedID") String strEncodedID){
-		// By default the response is bad :(
+		// By default the response is a failure :(
 		ResponseEntity oResponse = ResponseEntity.badRequest().build();
 		// Get the user from Redis if exists
 		User oRedisUser = this.serviceAuth.find(strEncodedID);

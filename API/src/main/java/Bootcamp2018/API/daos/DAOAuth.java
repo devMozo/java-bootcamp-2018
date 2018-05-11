@@ -57,14 +57,14 @@ public class DAOAuth {
 	 * @return
 	 */
 	public User find(String strEncodedID) {
-		return hashOperations.get(KEY, strEncodedID);
+		return this.hashOperations.get(KEY, strEncodedID);
 	}
 	/**
 	 *	Find entries inside the Redis's DB
 	 * @return All entries with its encodedID and User's Object
 	 */
 	public Map<String, User> findAll() {
-		return hashOperations.entries(KEY);
+		return this.hashOperations.entries(KEY);
 	}
 	/**
 	 * Update a user with the encoded ID
@@ -72,13 +72,13 @@ public class DAOAuth {
 	 * @param strEncodedID
 	 */
 	public void update(User oUser, String strEncodedID) {
-		hashOperations.put(KEY, strEncodedID, oUser);
+		this.hashOperations.put(KEY, strEncodedID, oUser);
 	}
 	/**
 	 * Delete a user from the Redis's DB
 	 * @param strEncodedID
 	 */
 	public void delete(String strEncodedID) {
-		hashOperations.delete(KEY, strEncodedID);
+		this.hashOperations.delete(KEY, strEncodedID);
 	}
 }

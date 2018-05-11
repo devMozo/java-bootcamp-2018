@@ -1,10 +1,14 @@
 package Bootcamp2018.API.daos;
 
 import Bootcamp2018.API.entities.Product;
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -15,6 +19,8 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 // Is used to provide a bridge between Spring Boot test features and JUnit.
 @RunWith(SpringRunner.class)
+// When we use a database that isn't a in-memory's database we need to put this
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 // Provides some standard setup needed for testing the persistence layer
 @DataJpaTest
 public class iDAOProductTest {
@@ -25,8 +31,12 @@ public class iDAOProductTest {
 	private TestEntityManager testEntityManager;
 	// The repository to test
 	@Autowired
-	private Product lineCart;
+	private iDAOProduct iDAOProduct;
 	/**
-	 * We don't have further than the JPARepository's Methods
+	 * We don't have implemented methods than the JPARepository's Methods
 	 */
+	@Test
+	public void makeSomething(){
+		Assert.assertTrue(true);
+	}
 }

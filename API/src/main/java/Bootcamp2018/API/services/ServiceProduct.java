@@ -29,14 +29,7 @@ public class ServiceProduct {
 		// Default response
 		Product oInnerProduct = null;
 		// If the product null or has empty fields
-		if(oProduct == null){
-			try {
-				throw new Exception("You need to pass a not-null product");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			// If not..
-		} else {
+		if(oProduct != null){
 			oInnerProduct = this.iDAOProduct.save(oProduct);
 		}
 		// Return the saved product
@@ -51,12 +44,8 @@ public class ServiceProduct {
 		// Default response
 		Product oInnerProduct = null;
 		// If the index position is bigger than the size of the array
-		if(oProduct == null || !this.iDAOProduct.existsById(oProduct.getId())){
-			try {
-				throw new IndexOutOfBoundsException("You've wanted to delete a product that doesn't exist");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		if(oProduct != null && this.iDAOProduct.existsById(oProduct.getId())){
+			throw new IndexOutOfBoundsException("You've wanted to delete a product that doesn't exist");
 			// If not..
 		} else {
 			// Update the product
@@ -73,11 +62,7 @@ public class ServiceProduct {
 	public void remove(Product oProduct) {
 		// If the index position is bigger than the size of the array
 		if(oProduct == null || !this.iDAOProduct.existsById(oProduct.getId())){
-			try {
-				throw new IndexOutOfBoundsException("You've wanted to delete a product that doesn't exist");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			throw new IndexOutOfBoundsException("You've wanted to delete a product that doesn't exist");
 			// If not..
 		} else {
 			// Remove product

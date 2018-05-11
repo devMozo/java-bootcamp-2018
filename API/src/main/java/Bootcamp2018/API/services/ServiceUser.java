@@ -1,6 +1,5 @@
 package Bootcamp2018.API.services;
 
-import Bootcamp2018.API.entities.Product;
 import Bootcamp2018.API.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,15 +28,8 @@ public class ServiceUser {
 	public User add(User oUser) {
 		// Default response
 		User oInnerUser = null;
-		// If the user is null
-		if(oUser == null){
-			try {
-				throw new Exception("You need to pass a not-null user");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			// If not..
-		} else {
+		// If the user is not null
+		if(oUser != null){
 			// Save the user
 			oInnerUser = this.iDAOUser.save(oUser);
 		}
@@ -54,11 +46,7 @@ public class ServiceUser {
 		User oInnerUser = null;
 		// If the index position is bigger than the size of the array
 		if(oUser == null || !this.iDAOUser.existsById(oUser.getId())){
-			try {
-				throw new IndexOutOfBoundsException("You've wanted to delete a user that doesn't exist");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			throw new IndexOutOfBoundsException("You've wanted to update a user that doesn't exist");
 			// If not..
 		} else {
 			// Update the user
@@ -75,11 +63,7 @@ public class ServiceUser {
 	public void remove(User oUser) {
 		// If the index position is bigger than the size of the array
 		if(oUser == null || !this.iDAOUser.existsById(oUser.getId())){
-			try {
-				throw new IndexOutOfBoundsException("You've wanted to delete a user that doesn't exist");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			throw new IndexOutOfBoundsException("You've wanted to delete a user that doesn't exist");
 			// If not..
 		} else {
 			// Remove user

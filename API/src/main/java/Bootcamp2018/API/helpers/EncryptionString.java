@@ -20,20 +20,25 @@ public class EncryptionString {
 	public static String encrypt(String strClearText) throws Exception{
 		// By default the response is empty
 		String strData = "";
-		// Get the instance of an MD5
-		MessageDigest md = MessageDigest.getInstance("MD5");
-		// Update the message digest with the string's bytes
-		md.update(strClearText.getBytes());
-		// Make something
-		byte[] digest = md.digest();
-		// New StringBuffer to save each byte
-		StringBuffer sb = new StringBuffer();
-		// For each byte
-		for (byte b : digest) {
-			// Add to the string bugger
-			sb.append(String.format("%02x", b & 0xff));
+		// If the text to encrypt exists
+		if(strClearText != null) {
+			// Get the instance of an MD5
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			// Update the message digest with the string's bytes
+			md.update(strClearText.getBytes());
+			// Make something
+			byte[] digest = md.digest();
+			// New StringBuffer to save each byte
+			StringBuffer sb = new StringBuffer();
+			// For each byte
+			for (byte b : digest) {
+				// Add to the string bugger
+				sb.append(String.format("%02x", b & 0xff));
+			}
+			// Save the response
+			strData = sb.toString();
 		}
 		// Return the buffer as string
-		return sb.toString();
+		return strData;
 	}
 }

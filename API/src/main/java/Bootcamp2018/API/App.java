@@ -1,6 +1,7 @@
 package Bootcamp2018.API;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * Represents the app of the project
