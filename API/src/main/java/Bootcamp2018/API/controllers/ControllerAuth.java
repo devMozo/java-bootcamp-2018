@@ -4,6 +4,7 @@ import Bootcamp2018.API.entities.User;
 import Bootcamp2018.API.services.ServiceAuth;
 import Bootcamp2018.API.services.ServiceUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +35,7 @@ public class ControllerAuth {
 	 * @param oUser
 	 * @return
 	 */
-	@RequestMapping(path = "/login", method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(path = "/login", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public ResponseEntity<?> login(@RequestBody User oUser, HttpServletResponse httpResponse) throws Exception {
 		// Return the first coincidence inside redis
 		User userToLogin = this.serviceUser.getByNickname(oUser.getNickname());
@@ -69,7 +70,9 @@ public class ControllerAuth {
 		// If the password are OK
 		if(userToLogin != null){
 			// Update the response
-			oResponse = ResponseEntity.ok().build();
+			oResponse = ResponseEntity.ok()
+					 				  .contentType(MediaType.APPLICATION_JSON_UTF8)
+									  .build();
 		}
 		// Return the response
 		return oResponse;

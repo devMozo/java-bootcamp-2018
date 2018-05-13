@@ -35,14 +35,18 @@ public class ControllerUser {
 	public ResponseEntity<?> add(@RequestBody User oUser){
 		// Get the saved user
 		User oSavedUser = this.oServiceUser.add(oUser);
-		// Create the new location to redirect to it
-		URI newLocation = ServletUriComponentsBuilder
-				.fromCurrentServletMapping()
-				.path("/action/get/{id}")
-				.buildAndExpand(oSavedUser.getId())
-				.toUri();
+		// By default the response is a bad request
+		ResponseEntity oResponse = ResponseEntity.badRequest().build();
+		// Check if the user exist
+		if(oSavedUser != null) {
+			// Create the new location to redirect to it
+			URI newLocation = ServletUriComponentsBuilder.fromCurrentServletMapping().path("/action/get/{id}")
+					.buildAndExpand(oSavedUser.getId()).toUri();
+			// Save the new response
+			oResponse = ResponseEntity.created(newLocation).build();
+		}
 		// Build the response and return it
-		return ResponseEntity.created(newLocation).build();
+		return oResponse;
 	}
 	/**
 	 * Update a user
@@ -121,7 +125,7 @@ public class ControllerUser {
 	@RequestMapping(path = "/action/getByFirstName/{firstName}", method = RequestMethod.GET, produces = "application/json")
 	public List<User> getByFirstName(@PathVariable("firstName") String strFirstName){
 		// Return all user that has that name
-		return  this.oServiceUser.getByFirstName(strFirstName);
+		return this.oServiceUser.getByFirstName(strFirstName);
 	}
 	/**
 	 *  Get a users by the nickname

@@ -13,6 +13,8 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -176,5 +178,40 @@ public class ServiceLineCartTest {
 		Optional<LineCart> oFound = this.serviceLineCart.get(new Long(123));
 		// Check if is all OK
 		Assert.assertEquals(null, oFound.get().getId());
+	}
+	/**
+	 * Get all LineCarts
+	 */
+	@Test
+	public void whenGetAll(){
+		// Make a final variable that contains the line-carts
+		final LineCart oFinalLineCart = this.oLineCart;
+		// Create a list of line-carts
+		List<LineCart> optLineCartToReturn = new ArrayList<LineCart>(){{
+			add(oFinalLineCart);
+			add(oFinalLineCart);
+			add(oFinalLineCart);
+			add(oFinalLineCart);
+		}};
+		// When the method call to the Find Method of the DAO we return the test Products
+		when(this.iDAOLineCart.findAll()).thenReturn(optLineCartToReturn);
+		// Found Product
+		List<LineCart> oFounds = this.serviceLineCart.getAll();
+		// Check if is all OK
+		Assert.assertEquals(4, oFounds.size());
+	}
+	/**
+	 * Get all line-carts when the list is empty
+	 */
+	@Test
+	public void whenGetAllAndIfEmpty(){
+		// Create a list of line-carts
+		List<LineCart> optLineCartToReturn = new ArrayList<LineCart>();
+		// When the method call to the Find Method of the DAO we return the test Products
+		when(this.iDAOLineCart.findAll()).thenReturn(optLineCartToReturn);
+		// Found Product
+		List<LineCart> oFounds = this.serviceLineCart.getAll();
+		// Check if is all OK
+		Assert.assertEquals(0, oFounds.size());
 	}
 }

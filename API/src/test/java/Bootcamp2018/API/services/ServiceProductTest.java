@@ -187,4 +187,39 @@ public class ServiceProductTest {
 		// Check if is all OK
 		Assert.assertEquals(null, oFound.get().getId());
 	}
+	/**
+	 * Get all products
+	 */
+	@Test
+	public void whenGetAll(){
+		// Make a final variable that contains the product
+		final Product oFinalProduct = this.oProduct;
+		// Create a list of products
+		List<Product> optProductToReturn = new ArrayList<Product>(){{
+			add(oFinalProduct);
+			add(oFinalProduct);
+			add(oFinalProduct);
+			add(oFinalProduct);
+		}};
+		// When the method call to the Find Method of the DAO we return the test Products
+		when(this.iDAOProduct.findAll()).thenReturn(optProductToReturn);
+		// Found Product
+		List<Product> oFounds = this.serviceProduct.getAll();
+		// Check if is all OK
+		Assert.assertEquals(4, oFounds.size());
+	}
+	/**
+	 * Get all products when the list is empty
+	 */
+	@Test
+	public void whenGetAllAndIfEmpty(){
+		// Create a list of products
+		List<Product> optProductToReturn = new ArrayList<Product>();
+		// When the method call to the Find Method of the DAO we return the test Products
+		when(this.iDAOProduct.findAll()).thenReturn(optProductToReturn);
+		// Found Product
+		List<Product> oFounds = this.serviceProduct.getAll();
+		// Check if is all OK
+		Assert.assertEquals(0, oFounds.size());
+	}
 }

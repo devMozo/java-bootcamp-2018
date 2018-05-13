@@ -34,14 +34,21 @@ public class ControllerProduct {
 	public ResponseEntity<?> add(@RequestBody Product oProduct){
 		// Get the saved product
 		Product oSavedProduct = this.serviceProduct.add(oProduct);
-		// Create the new location to redirect to it
-		URI newLocation = ServletUriComponentsBuilder
-									.fromCurrentServletMapping()
-									.path("/action/get/{id}")
-									.buildAndExpand(oSavedProduct.getId())
-									.toUri();
+		// By default the response is a bad request
+		ResponseEntity oResponse = ResponseEntity.badRequest().build();
+		// Check if the user exist
+		if(oSavedProduct != null) {
+			// Create the new location to redirect to it
+			URI newLocation = ServletUriComponentsBuilder
+										.fromCurrentServletMapping()
+										.path("/action/get/{id}")
+										.buildAndExpand(oSavedProduct.getId())
+										.toUri();
+			// Save the new response
+			oResponse = ResponseEntity.created(newLocation).build();
+		}
 		// Build the response and return it
-		return ResponseEntity.created(newLocation).build();
+		return oResponse;
 	}
 	/**
 	 * Update a product by id

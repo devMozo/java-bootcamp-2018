@@ -28,16 +28,16 @@ import java.util.Optional;
 public class ControllerShoppingCart {
 	// Shopping Cart's Service
 	@Autowired
-	ServiceLineCart serviceLineCart;
+	private ServiceLineCart serviceLineCart;
 	// User's Service
 	@Autowired
-	ServiceUser serviceUser;
+	private ServiceUser serviceUser;
 	// Auth's Service
 	@Autowired
-	ServiceAuth serviceAuth;
+	private ServiceAuth serviceAuth;
 	// Product's Service
 	@Autowired
-	ServiceProduct serviceProduct;
+	private ServiceProduct serviceProduct;
 	/**
 	 * Add a new line-cart
 	 * @param iCant
