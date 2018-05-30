@@ -6,7 +6,9 @@ import Bootcamp2018.API.entities.Product;
 import Bootcamp2018.API.entities.User;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -40,6 +42,9 @@ public class ServiceLineCartTest {
 	private iDAOLineCart iDAOLineCart;
 	// The LineCart to test
 	private LineCart oLineCart;
+	// Handle exception for
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
 	/**
 	 * Initialize the Test
 	 */
@@ -69,6 +74,18 @@ public class ServiceLineCartTest {
 		this.oLineCart.setUser(oUser);
 		//  These instances would be created at the start of every test method of this test class.
 		MockitoAnnotations.initMocks(this);
+	}
+	/**
+	 * Test when we want to save a valid LineCart
+	 */
+	@Test
+	public void givenAnValidLineCartWhenISaveItThenReturnTheSameLineCart(){
+		// When insert the line cart return the same
+		when(this.iDAOLineCart.save(this.oLineCart)).thenReturn(this.oLineCart);
+		// Try to add a null LineCart
+		LineCart oLineCart = this.serviceLineCart.add(this.oLineCart);
+		// Check the result
+		Assert.assertEquals(20, oLineCart.getICant());
 	}
 	/**
 	 * Test when we want to save an invalid LineCart
@@ -115,10 +132,18 @@ public class ServiceLineCartTest {
 	public void givenAnInvalidLineCartWhenIUpdateItThenException(){
 		// When check if the LineCart exists return true
 		when(this.iDAOLineCart.existsById(null)).thenReturn(true);
-		// Make an exception when call this method
-		doThrow(IndexOutOfBoundsException.class).when(this.iDAOLineCart).save(any(LineCart.class));
 		// Try to update a null LineCart
-		LineCart oLineCart = this.serviceLineCart.update(new LineCart());
+		LineCart oLineCart = this.serviceLineCart.update(null);
+	}
+
+	@Test
+	public void givenAnInvalidLineCartWhenIUpdateItThenExceptionUsingRule(){
+		// Expect the followed exception
+		this.exception.expect(IndexOutOfBoundsException.class);
+		// When check if the LineCart exists return true
+		when(this.iDAOLineCart.existsById(null)).thenReturn(true);
+		// Try to update a null LineCart
+		LineCart oLineCart = this.serviceLineCart.update(null);
 	}
 	/**
 	 * When a I want to delete an existed LineCart
@@ -145,10 +170,20 @@ public class ServiceLineCartTest {
 	public void givenAnInvalidLineCartWhenIDeleteItThenException(){
 		// When check if the LineCart exists return true
 		when(this.iDAOLineCart.existsById(null)).thenReturn(true);
-		// Make an exception when call this method
-		doThrow(IndexOutOfBoundsException.class).when(this.iDAOLineCart).delete(any(LineCart.class));
 		// Try to update a null LineCart
-		this.serviceLineCart.remove(new LineCart());
+		this.serviceLineCart.remove(null);
+	}
+	/**
+	 * Test when we want to delete an invalid LineCart
+	 */
+	@Test
+	public void givenAnInvalidLineCartWhenIDeleteItThenExceptionUsingRule(){
+		// Expect the followed exception
+		this.exception.expect(IndexOutOfBoundsException.class);
+		// When check if the LineCart exists return true
+		when(this.iDAOLineCart.existsById(null)).thenReturn(true);
+		// Try to update a null LineCart
+		this.serviceLineCart.remove(null);
 	}
 	/**
 	 * Check if we can find the LineCart by a valid ID

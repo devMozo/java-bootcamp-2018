@@ -22,7 +22,7 @@ import java.util.Optional;
 public class ServiceLineCart {
 	// The Line-cart's DAO
 	@Autowired
-	iDAOLineCart iDAOLineCart;
+	private iDAOLineCart iDAOLineCart;
 	/**
 	 * Add a new line of the User's Cart
 	 * @param oLineCart
