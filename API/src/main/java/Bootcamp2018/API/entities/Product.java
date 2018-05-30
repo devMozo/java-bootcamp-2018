@@ -1,5 +1,6 @@
 package Bootcamp2018.API.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,6 +35,11 @@ public class Product {
 	// The quantity of the products
 	@Column(name = "cant")
 	private int iCant = 0;
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,mappedBy = "product")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
 	private List<LineCart> arrLineCart = new ArrayList<>();
+	// Category
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
+	@JoinColumn(name = "id_category")
+	private Category category;
 }

@@ -1,6 +1,8 @@
 package Bootcamp2018.API.controllers;
 
+import Bootcamp2018.API.entities.Category;
 import Bootcamp2018.API.entities.Product;
+import Bootcamp2018.API.services.ServiceCategory;
 import Bootcamp2018.API.services.ServiceProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,9 @@ public class ControllerProduct {
 	// Product's Services
 	@Autowired
 	private ServiceProduct serviceProduct;
+	// Category's Services
+	@Autowired
+	private ServiceCategory serviceCategory;
 	/**
 	 * Add a new product
 	 * @param oProduct
@@ -119,6 +123,17 @@ public class ControllerProduct {
 		}
 		// Return an ok's message
 		return oResponse;
+	}
+	/**
+	 * Get an specific product by category
+	 * @return
+	 */
+	@RequestMapping(path = "/action/getByCategory/{categoryID}", produces = "application/json", method = RequestMethod.GET)
+	public List<Product> getByCategory(@PathVariable("categoryID") String categoryID){
+		// Get the product to delete
+		Category oCategory = this.serviceCategory.getByName(categoryID);
+		// Return an ok's message
+		return oCategory.getArrProducts();
 	}
 	/**
 	 * Get all products

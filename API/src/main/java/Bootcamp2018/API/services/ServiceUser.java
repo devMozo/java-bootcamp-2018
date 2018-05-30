@@ -79,7 +79,6 @@ public class ServiceUser {
 		// Get the first coincidence
 		return this.iDAOUser.findById(id);
 	}
-
 	/**
 	 * Get an specific user by the first name
 	 * @param strFirstName

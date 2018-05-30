@@ -79,6 +79,7 @@ public class ControllerShoppingCartTest {
 		this.oUser.setPassword("12345");
 		this.oUser.setLastName("Jorge");
 		this.oUser.setFirstName("ApellidoJorge");
+		this.oUser.setArrLineCart(new ArrayList<>());
 		// New Product
 		this.oProduct = new Product();
 		// Set the main data
@@ -277,6 +278,28 @@ public class ControllerShoppingCartTest {
 		// Check equals
 		Assert.assertNotEquals(null, oGettedLineCarts);
 		Assert.assertNotEquals(0, oGettedLineCarts.size());
+	}
+	/**
+	 * Test when I buy my cart
+	 */
+	@Test
+	public void whenBuy() throws Exception {
+
+		Mockito.when(this.serviceAuth.find("1")).thenReturn(this.oUser);
+		// Mock the request to this endpoint
+		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/cart/action/buy")
+				.contentType(MediaType.APPLICATION_JSON)
+				.cookie(new Cookie("strEncodedID", "1"));
+		// Check the Result
+		ResultActions resultActions = this.mockMvc.perform(mockHttpServletRequestBuilder)
+				.andExpect(MockMvcResultMatchers.status().isOk());
+		// New Mapper
+		ObjectMapper objectMapper = new ObjectMapper();
+		// Get the returned LineCarts
+		List<LineCart> oGettedLineCarts = objectMapper.readValue(resultActions.andReturn().getResponse().getContentAsString(),
+				objectMapper.getTypeFactory().constructCollectionType(List.class, LineCart.class));
+		// Check equals
+		Assert.assertNotEquals(null, oGettedLineCarts);
 	}
 	/**
 	 * Create the JSON to pass to the request

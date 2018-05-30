@@ -1,7 +1,9 @@
 package Bootcamp2018.API.controllers;
 
+import Bootcamp2018.API.entities.Category;
 import Bootcamp2018.API.entities.Product;
 import Bootcamp2018.API.entities.Product;
+import Bootcamp2018.API.services.ServiceCategory;
 import Bootcamp2018.API.services.ServiceProduct;
 import Bootcamp2018.API.services.ServiceProduct;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,8 +48,13 @@ public class ControllerProductTest {
 	// The Product's Service of the Controller
 	@MockBean
 	private ServiceProduct serviceProduct;
+	// The Category's Service of the Controller
+	@MockBean
+	private ServiceCategory serviceCategory;
 	// The Product that we are going to use
 	private Product oProduct;
+	// The Category that we are going to use
+	private Category oCategory;
 	// The Product converted to JSON
 	private String strProductJSON;
 	/**
@@ -62,6 +69,15 @@ public class ControllerProductTest {
 		this.oProduct.setStrName("Nuevo Producto");
 		this.oProduct.setPrice(20);
 		this.oProduct.setICant(100);
+		this.oProduct.setCategory(new Category());
+
+		List<Product> listProducts = new ArrayList<>();
+		listProducts.add(this.oProduct);
+
+		this.oCategory = new Category();
+		this.oCategory.setId(new Long(1));
+		this.oCategory.setName("Something");
+		this.oCategory.setArrProducts(listProducts);
 		// Get the Product converted to JSON
 		this.strProductJSON = this.createProductJSON(this.oProduct);
 	}
@@ -205,6 +221,46 @@ public class ControllerProductTest {
 				.andExpect(MockMvcResultMatchers.status().isOk());
 		// Check equals
 		Assert.assertEquals("", resultActions.andReturn().getResponse().getContentAsString());
+	}
+	/**
+	 * Test when I want to get a Product with correct data passing the category
+	 */
+	@Test
+	public void givenCorrectDataWhenGetItByCategoryThenReturnIt() throws Exception {
+		// When call to this method return the current Product
+		Mockito.when(this.serviceCategory.getByName(this.oCategory.getName())).thenReturn(this.oCategory);
+		// Mock the request to this endpoint
+		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.get("/product/action/getByCategory/" + this.oCategory.getName())
+				.contentType(MediaType.APPLICATION_JSON);
+		// Check the Result
+		ResultActions resultActions = this.mockMvc.perform(mockHttpServletRequestBuilder)
+				.andExpect(MockMvcResultMatchers.status().isOk());
+		// New Mapper
+		ObjectMapper objectMapper = new ObjectMapper();
+		// Get the returned Product
+		List<Product> oGettedProducts = objectMapper.readValue(resultActions.andReturn().getResponse().getContentAsString(), List.class);
+		// Check equals
+		Assert.assertEquals(1, oGettedProducts.size());
+	}
+	/**
+	 * Test when I want to get a Product with incorrect data
+	 */
+	@Test
+	public void givenIncorrectDataWhenGetItByCategoryThenReturnIt() throws Exception {
+		// When call to this method return the current Product
+		Mockito.when(this.serviceCategory.getByName(this.oCategory.getName())).thenReturn(new Category());
+		// Mock the request to this endpoint
+		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.get("/product/action/getByCategory/" + this.oCategory.getName())
+				.contentType(MediaType.APPLICATION_JSON);
+		// Check the Result
+		ResultActions resultActions = this.mockMvc.perform(mockHttpServletRequestBuilder)
+				.andExpect(MockMvcResultMatchers.status().isOk());
+		// New Mapper
+		ObjectMapper objectMapper = new ObjectMapper();
+		// Get the returned Product
+		List<Product> oGettedProducts = objectMapper.readValue(resultActions.andReturn().getResponse().getContentAsString(), List.class);
+		// Check equals
+		Assert.assertEquals(0, oGettedProducts.size());
 	}
 	/**
 	 * Test when I want to get all Products

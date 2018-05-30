@@ -156,7 +156,7 @@ public class ControllerShoppingCart {
 	 */
 	@RequestMapping(path = "/action/get/{id}", produces = "application/json", method = RequestMethod.GET)
 	public LineCart get(@PathVariable("id") Long id,
-						@CookieValue(value = "strEncodedID") String strEncodedID){
+			@CookieValue(value = "strEncodedID") String strEncodedID){
 		// Get the line-cart to delete
 		Optional<LineCart> optLineCart = this.serviceLineCart.get(id);
 		// Response by default
@@ -168,6 +168,19 @@ public class ControllerShoppingCart {
 		}
 		// Return an ok's message
 		return oResponse;
+	}
+	/**
+	 * Buy
+	 * @return
+	 */
+	@RequestMapping(path = "/action/buy", produces = "application/json", method = RequestMethod.POST)
+	public List<LineCart> buy(@CookieValue(value = "strEncodedID") String strEncodedID){
+		// Get the user from Redis if exists
+		User oRedisUser = this.serviceAuth.find(strEncodedID);
+		// Get the carts line
+		List<LineCart> listLineCarts = oRedisUser.getArrLineCart();
+		// Return an ok's message
+		return listLineCarts;
 	}
 	/**
 	 * Get all lines-cart
