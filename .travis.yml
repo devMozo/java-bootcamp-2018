@@ -7,4 +7,4 @@ notifications:
     recipients:
       - devnicolasmozo@gmail.com
     on_success: [always|never|change] # default: change
- No newline at end of file
+ 
