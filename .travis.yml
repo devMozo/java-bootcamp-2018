@@ -2,7 +2,6 @@ language: java
 sudo: false
 services:
   - redis-server
-before_script: sudo redis-server /etc/redis/redis.conf --port 6380
 before_install: cd API
 install: mvn clean install
 notifications:
