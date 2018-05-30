@@ -17,6 +17,11 @@ public class EncryptionStringTest {
 	@Before
 	public void init(){
 	}
+
+	@Test
+	public void whenIntanceClass() throws Exception {
+		Assert.assertTrue(new EncryptionString() instanceof EncryptionString);
+	}
 	/**
 	 * When pass a string check that the returned string will be correct
 	 * @throws Exception

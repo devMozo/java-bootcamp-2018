@@ -14,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Map;
+
 /**
  * Represents the class to test the Auth's Repository
  * @author Mozo Nicolas
@@ -89,5 +91,15 @@ public class DAOAuthTest {
 		User oUserFound = this.daoAuth.find("1");
 		// Find that user
 		Assert.assertEquals(null, oUserFound);
+	}
+	/**
+	 * Check when get all the users
+	 */
+	@Test
+	public void whenGetAll(){
+		// Get all users
+		Map<String, User> listAuthUsers = this.daoAuth.findAll();
+		// Find that user
+		Assert.assertTrue(listAuthUsers.size() >= 0);
 	}
 }

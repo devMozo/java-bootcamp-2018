@@ -16,6 +16,11 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -173,5 +178,17 @@ public class ServiceAuthTest {
 	@Test(expected = Exception.class)
 	public void givenAnInvalidUserWhenDeleteItThenException() throws Exception {
 		this.serviceAuth.delete(null);
+	}
+	/**
+	 * Get all auth users
+	 */
+	@Test
+	public void whenGetAll(){
+		// When the method call to the Find Method of the DAO we return the test users
+		when(this.daoAuth.findAll()).thenReturn(new HashMap<String, User>());
+		// Found user
+		Map<String, User> hsmpUsers = this.serviceAuth.findAll();
+		// Check if is all OK
+		Assert.assertTrue(hsmpUsers.size() >= 0);
 	}
 }

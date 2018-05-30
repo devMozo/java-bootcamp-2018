@@ -229,7 +229,7 @@ public class ServiceUserTest {
 	 * I want to find someone with an invalid ID
 	 */
 	@Test
-	public void whenInvalidIDThenReturnTheUser(){
+	public void whenInvalidIDThenReturnNull(){
 		// Create a optional to get the User
 		Optional<User> optUserToReturn = Optional.of(new User());
 		// When the method call to the Find Method of the DAO we return the test users
@@ -238,5 +238,17 @@ public class ServiceUserTest {
 		Optional<User> oFound = this.serviceUser.get(new Long(123));
 		// Check if is all OK
 		Assert.assertEquals(null, oFound.get().getId());
+	}
+	/**
+	 * Get all users
+	 */
+	@Test
+	public void whenGetAll(){
+		// When the method call to the Find Method of the DAO we return the test users
+		when(this.iDAOUser.findAll()).thenReturn(new ArrayList<User>());
+		// Found user
+		List<User> arrUsers = this.serviceUser.getAll();
+		// Check if is all OK
+		Assert.assertTrue(arrUsers.size() >= 0);
 	}
 }

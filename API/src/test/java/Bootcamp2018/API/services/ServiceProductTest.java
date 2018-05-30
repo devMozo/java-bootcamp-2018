@@ -5,7 +5,9 @@ import Bootcamp2018.API.entities.Product;
 import Bootcamp2018.API.entities.Product;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -39,6 +41,9 @@ public class ServiceProductTest {
 	private iDAOProduct iDAOProduct;
 	// The Product to test
 	private Product oProduct;
+	// Handle exception for
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
 	/**
 	 * Initialize the Test
 	 */
@@ -91,7 +96,7 @@ public class ServiceProductTest {
 	/**
 	 * When a I want to update an existed Product
 	 */
-	@Test(expected = IndexOutOfBoundsException.class)
+	@Test
 	public void givenAValidProductWhenUpdateItReturnIt(){
 		// Make a custom answer
 		doAnswer(new Answer<Product>() {
@@ -123,10 +128,20 @@ public class ServiceProductTest {
 	public void givenAnInvalidProductWhenIUpdateItThenException(){
 		// When check if the Product exists return true
 		when(this.iDAOProduct.existsById(null)).thenReturn(true);
-		// Make an exception when call this method
-		doThrow(IndexOutOfBoundsException.class).when(this.iDAOProduct).save(any(Product.class));
 		// Try to update a null Product
-		Product oProduct = this.serviceProduct.update(new Product());
+		Product oProduct = this.serviceProduct.update(null);
+	}
+	/**
+	 * Test when we want to update an invalid Product usign Rule
+	 */
+	@Test
+	public void givenAnInvalidProductWhenIUpdateItThenExceptionUsingRule(){
+		// Expect the following exception
+		this.exception.expect(IndexOutOfBoundsException.class);
+		// When check if the Product exists return true
+		when(this.iDAOProduct.existsById(null)).thenReturn(true);
+		// Try to update a null Product
+		Product oProduct = this.serviceProduct.update(null);
 	}
 	/**
 	 * When a I want to delete an existed Product
@@ -153,10 +168,20 @@ public class ServiceProductTest {
 	public void givenAnInvalidProductWhenIDeleteItThenException(){
 		// When check if the Product exists return true
 		when(this.iDAOProduct.existsById(null)).thenReturn(true);
-		// Make an exception when call this method
-		doThrow(IndexOutOfBoundsException.class).when(this.iDAOProduct).delete(any(Product.class));
 		// Try to update a null Product
-		this.serviceProduct.remove(new Product());
+		this.serviceProduct.remove(null);
+	}
+	/**
+	 * Test when we want to delete an invalid Product
+	 */
+	@Test
+	public void givenAnInvalidProductWhenIDeleteItThenExceptionUsingRule(){
+
+		this.exception.expect(IndexOutOfBoundsException.class);
+		// When check if the Product exists return true
+		when(this.iDAOProduct.existsById(null)).thenReturn(true);
+		// Try to update a null Product
+		this.serviceProduct.remove(null);
 	}
 	/**
 	 * Check if we can find the Product by a valid ID

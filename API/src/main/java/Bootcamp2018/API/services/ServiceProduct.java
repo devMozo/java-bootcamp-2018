@@ -44,7 +44,7 @@ public class ServiceProduct {
 		// Default response
 		Product oInnerProduct = null;
 		// If the index position is bigger than the size of the array
-		if(oProduct != null && this.iDAOProduct.existsById(oProduct.getId())){
+		if(oProduct == null || !this.iDAOProduct.existsById(oProduct.getId())){
 			throw new IndexOutOfBoundsException("You've wanted to delete a product that doesn't exist");
 			// If not..
 		} else {
