@@ -1,22 +1,10 @@
 language: java
-jdk:
-- oraclejdk8
-
-before_script: cd API
-
-install:
-- mvn -N io.takari:maven:wrapper
-- ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-
+sudo: false
+before_install: cd API
 script: mvn clean test
-
-cache:
-  directories:
-  - $HOME/.m2
-
 notifications:
   email:
     recipients:
       - devnicolasmozo@gmail.com
-    on_success: change # default: change
-    on_failure: always # default: always
+    on_success: [always|never|change] # default: change
+ No newline at end of file
