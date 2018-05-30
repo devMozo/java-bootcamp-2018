@@ -28,16 +28,16 @@ import java.util.Optional;
 public class ControllerShoppingCart {
 	// Shopping Cart's Service
 	@Autowired
-	ServiceLineCart serviceLineCart;
+	private ServiceLineCart serviceLineCart;
 	// User's Service
 	@Autowired
-	ServiceUser serviceUser;
+	private ServiceUser serviceUser;
 	// Auth's Service
 	@Autowired
-	ServiceAuth serviceAuth;
+	private ServiceAuth serviceAuth;
 	// Product's Service
 	@Autowired
-	ServiceProduct serviceProduct;
+	private ServiceProduct serviceProduct;
 	/**
 	 * Add a new line-cart
 	 * @param iCant
@@ -49,7 +49,7 @@ public class ControllerShoppingCart {
 	public ResponseEntity<?> add(@RequestParam("cant") int iCant,
 								 @RequestParam("idProduct") Long idProduct,
 	 							 @CookieValue(value = "strEncodedID") String strEncodedID){
-		// By default the response is bad :(
+		// By default the response is a failure :(
 		ResponseEntity oResponse = ResponseEntity.badRequest().build();
 		// Get the user from Redis if exists
 		User oRedisUser = this.serviceAuth.find(strEncodedID);

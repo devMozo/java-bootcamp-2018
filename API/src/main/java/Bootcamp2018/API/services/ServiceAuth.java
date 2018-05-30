@@ -27,17 +27,15 @@ public class ServiceAuth {
 	 * @return An encoded ID
 	 */
 	@Transactional
-	public String save(User oUser) {
+	public String save(User oUser) throws Exception {
 		// By default the string is null
 		String strEncodedID = null;
 		// Try to make some different :OOOOO RT: Steve Jobs
-		try {
+		if(oUser != null) {
 			// Encoded the id
 			strEncodedID = EncryptionString.encrypt(oUser.getId().toString());
 			// Save the user with this encoded id
 			this.daoAuth.save(oUser, strEncodedID);
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		// Return that encoded id
 		return strEncodedID;
@@ -65,23 +63,15 @@ public class ServiceAuth {
 	 * @param oUser
 	 */
 	@Transactional
-	public void update(User oUser) {
-		try {
-			this.daoAuth.update(oUser, EncryptionString.encrypt(oUser.getId().toString()));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void update(User oUser) throws Exception {
+		this.daoAuth.update(oUser, EncryptionString.encrypt(oUser.getId().toString()));
 	}
 	/**
 	 * Delete a user from the Redis's DB
 	 * @param oUser
 	 */
 	@Transactional
-	public void delete(User oUser) {
-		try {
-			this.daoAuth.delete(EncryptionString.encrypt(oUser.getId().toString()));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void delete(User oUser) throws Exception {
+		this.daoAuth.delete(EncryptionString.encrypt(oUser.getId().toString()));
 	}
 }
